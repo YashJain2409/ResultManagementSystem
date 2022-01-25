@@ -1,29 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="homepage.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="homepage.css" />
     <title>Homepage</title>
-</head>
-<body>
-        
-            
-        
-        <div class="cont">
-
-            
-            <input type="text" id="en" placeholder="Enter Enrollment No"> 
-            
-            
-            
-            
-            <button id="b">submit</button>
-            
-            
-            <a href="">Admin Login</a>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar fixed-top" style="background-color: #f4f9f9">
+        <div class="container">
+          <div class="navbar-header">
+            <p class="navbar-brand">RESULT MANAGEMENT</p>
+          </div>
+          <ul class="navbar-nav">
+            <li id="home" class="nav-item">
+              <a class="nav-link" href="/">ADMIN LOGIN</a>
+            </li>
+          </ul>
         </div>
-            
-        </body>
-        </html>  
+      </nav>
+    </header>
+    <main>
+      <div class="form-style">
+        <img src="result.png" alt="home-image" class="center" />
+        <form>
+          <div class="form-group">
+            <label for="inputEnrolment">Enrolment No.</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputEnrolment"
+              aria-describedby="emailHelp"
+            />
+            <small class="form-text text-muted"
+              >Search your results by entering your enrolment no.</small
+            >
+          </div>
+          <button type="submit" class="btn btn-dark" style="width: 125px">
+            Search
+          </button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
