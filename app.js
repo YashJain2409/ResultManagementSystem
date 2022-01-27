@@ -9,6 +9,10 @@ app.get("/",(req,res) => {
     res.render("student");
 });
 
+app.get("/admin",(req,res) => {
+  res.render("admin");
+})
+
 app.listen(port, ()=> {
   console.log("listening on port 3000");
 });

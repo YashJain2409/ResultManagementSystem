@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="homepage.css" />
-    <title>Homepage</title>
+    <title>AdminPage</title>
   </head>
   <body>
     <header>
@@ -22,7 +22,7 @@
           </div>
           <ul class="navbar-nav">
             <li id="home" class="nav-item">
-              <a class="nav-link" href="/admin">ADMIN LOGIN</a>
+              <a class="nav-link" href="/">HOME</a>
             </li>
           </ul>
         </div>
@@ -30,22 +30,27 @@
     </header>
     <main>
       <div class="form-style">
-        <img src="result.png" alt="home-image" class="center" />
+        <img src="admin.png" alt="home-image" class="center" />
         <form>
           <div class="form-group">
-            <label for="inputEnrolment">Enrolment No.</label>
+            <label for="inputEnrolment">User Name.</label>
             <input
               type="text"
               class="form-control"
               id="inputEnrolment"
               aria-describedby="emailHelp"
             />
-            <small class="form-text text-muted"
-              >Search your results by entering your enrolment no.</small
-            >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
           </div>
           <button type="submit" class="btn btn-dark" style="width: 125px">
-            Search
+            Login
           </button>
         </form>
       </div>
