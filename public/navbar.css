@@ -1,0 +1,33 @@
+.form-style {
+  margin: 200px auto;
+  width: 300px;
+}
+
+.navbar {
+  padding-top: 15px;
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 13px;
+  letter-spacing: 5px;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.navbar li a {
+  margin-bottom: 16px;
+  color: #000;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: #1abc9c;
+}
+
+.navbar-toggler{
+  margin: 0 20px 10px 0;
+}
