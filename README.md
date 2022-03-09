@@ -4,10 +4,6 @@
 A web app for managing college results.
 
 
-## Team members
-- [Yash jain](https://github.com/YashJain2409)
-- [Nirav patel](https://github.com/niravgithub)
-- [Poojan patel](https://github.com/patel-poojan)
 ## Built with
 - [node](https://nodejs.org/en/)
 - [express](https://expressjs.com/)
