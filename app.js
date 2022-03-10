@@ -7,7 +7,7 @@ const app = express();
 
 const adminRoutes = require("./routes/admin");
 const dashboardRoutes = require('./routes/dashboard');
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("public"));

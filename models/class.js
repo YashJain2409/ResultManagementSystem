@@ -7,7 +7,7 @@ const classSchema = new Schema({
   branch: { type: String, required: true },
   sem: { type: Number, required: true },
   subjects: [{ type: String, required: true }],
-  students: [{ type: mongoose.Types.ObjectId, required: true, ref: "Student" }],
+  students: [{ type: Number, required: true, ref: "Student" }],
 });
 
 module.exports = new mongoose.model("Class", classSchema);

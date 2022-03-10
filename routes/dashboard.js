@@ -14,4 +14,8 @@ Router.post("/classes", dashboardControllers.addClass);
 
 Router.delete("/classes/:cid", dashboardControllers.deleteClass);
 
+Router.get("/students",dashboardControllers.studentDashboard);
+
+Router.post("/students",dashboardControllers.addStudents);
+
 module.exports = Router;

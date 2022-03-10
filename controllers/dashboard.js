@@ -1,5 +1,7 @@
 const Class = require("../models/class");
+const Student = require("../models/student");
 const HttpError = require("../models/http-error");
+const mongoose = require("mongoose");
 
 const dashboard = (req, res, next) => {
   res.render("dashboard");
@@ -7,6 +9,10 @@ const dashboard = (req, res, next) => {
 
 const classDashboard = (req, res, next) => {
   res.render("class");
+};
+
+const studentDashboard = (req, res, next) => {
+  res.render("students");
 };
 
 const getClass = async (req, res, next) => {
@@ -55,8 +61,41 @@ const deleteClass = async (req, res, next) => {
   res.status(200).json({ message: "deleted place" });
 };
 
+const addStudents = async (req, res, next) => {
+  const { cid, name, enrolment_no } = req.body;
+  console.log(cid);
+  const createdStudent = new Student({
+    _id: enrolment_no,
+    name: name,
+    class_id: cid,
+    result: [],
+  });
+
+  let classDoc;
+  try {
+    classDoc = await Class.findById(cid);
+  } catch (err) {
+    return next(new HttpError("creating student failed", 500));
+  }
+  if (!classDoc)
+    return next(new HttpError("could not find class for provided id", 404));
+  try {
+    const sess = await mongoose.startSession();
+    await sess.startTransaction();
+    await createdStudent.save({ session: sess });
+    classDoc.students.push(createdStudent);
+    await classDoc.save({ session: sess });
+    await sess.commitTransaction();
+  } catch (err) {
+    return next(new HttpError("creating place failed", 500));
+  }
+  res.render("students");
+};
+
+exports.addStudents = addStudents;
 exports.dashboard = dashboard;
 exports.addClass = addClass;
 exports.getClass = getClass;
+exports.studentDashboard = studentDashboard;
 exports.classDashboard = classDashboard;
 exports.deleteClass = deleteClass;
