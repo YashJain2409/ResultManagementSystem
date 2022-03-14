@@ -15,6 +15,11 @@ const studentDashboard = (req, res, next) => {
   res.render("students");
 };
 
+const resultDashboard = async (req, res, next) => {
+  const classIds = await Class.find({}, "_id");
+  res.render("result", { classes: classIds });
+};
+
 const getClass = async (req, res, next) => {
   let classes;
   try {
@@ -28,7 +33,6 @@ const getClass = async (req, res, next) => {
 const addClass = async (req, res, next) => {
   const { cid, branch, sem, subjects } = req.body;
   const subArray = subjects.split(",");
-  console.log(subArray);
   const createdClass = new Class({
     _id: cid,
     branch,
@@ -92,8 +96,17 @@ const addStudents = async (req, res, next) => {
   res.render("students");
 };
 
+const subjectByClassid = async (req, res) => {
+  const obj = await Class.findById(req.params.cid, "subjects");
+  const subjects = obj.subjects;
+  console.log(subjects);
+  res.status(200).json({ subjects: subjects });
+};
+
 exports.addStudents = addStudents;
+exports.subjectByClassid = subjectByClassid;
 exports.dashboard = dashboard;
+exports.resultDashboard = resultDashboard;
 exports.addClass = addClass;
 exports.getClass = getClass;
 exports.studentDashboard = studentDashboard;

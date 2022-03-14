@@ -36,7 +36,7 @@ mongoose
     "mongodb+srv://admin-yash:Test123@cluster0.0cm8n.mongodb.net/resultDB?retryWrites=true&w=majority"
   )
   .then(() => {
-    app.listen(3000);
+    app.listen(port);
   })
   .catch((err) => {
     console.log(err);

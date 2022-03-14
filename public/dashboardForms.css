@@ -1,11 +1,16 @@
 .form-style {
-    margin: 20px 0 0 20px;
-  }
+  margin: 20px 0 0 20px;
+}
 
 .label-style {
-    max-width: 150px;
+  max-width: 150px;
 }
 
 .text-style {
-    width: 50%;
+  width: 50%;
+}
+
+.myDropDown {
+  height: 35px;
+  border-radius: 4px;
 }

@@ -18,4 +18,8 @@ Router.get("/students",dashboardControllers.studentDashboard);
 
 Router.post("/students",dashboardControllers.addStudents);
 
+Router.get("/results",dashboardControllers.resultDashboard);
+
+Router.get("/results/:cid",dashboardControllers.subjectByClassid);
+
 module.exports = Router;
