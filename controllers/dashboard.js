@@ -1,5 +1,6 @@
 const Class = require("../models/class");
 const Student = require("../models/student");
+const Result = require("../models/result");
 const HttpError = require("../models/http-error");
 const mongoose = require("mongoose");
 
@@ -91,7 +92,7 @@ const addStudents = async (req, res, next) => {
     await classDoc.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
-    return next(new HttpError("creating place failed", 500));
+    return next(new HttpError("creating student failed", 500));
   }
   res.render("students");
 };
@@ -99,12 +100,46 @@ const addStudents = async (req, res, next) => {
 const subjectByClassid = async (req, res) => {
   const obj = await Class.findById(req.params.cid, "subjects");
   const subjects = obj.subjects;
-  console.log(subjects);
   res.status(200).json({ subjects: subjects });
+};
+
+const addResult = async (req, res) => {
+  const classDoc = await Class.findById(req.body.class_id);
+  const studentDoc = await Student.findById(req.body.enrolment_no);
+  const subjects = classDoc.subjects;
+  let result = [];
+  subjects.forEach((subject) => {
+    const marks = req.body[subject];
+    const obj = {
+      name: subject,
+      score: marks,
+    };
+    result.push(obj);
+  });
+  const createdResult = new Result({
+    student_id: req.body.enrolment_no,
+    class_id: req.body.class_id,
+    result: result,
+  });
+  try {
+    const sess = await mongoose.startSession();
+    await sess.startTransaction();
+    await createdResult.save({ session: sess });
+    classDoc.result.push(createdResult);
+    await classDoc.save({ session: sess });
+    studentDoc.result.push(createdResult);
+    await studentDoc.save({ session: sess });
+    await sess.commitTransaction();
+  } catch (err) {
+    return next(new HttpError("creating result failed", 500));
+  }
+  const classIds = await Class.find({}, "_id");
+  res.render("result", { classes: classIds });
 };
 
 exports.addStudents = addStudents;
 exports.subjectByClassid = subjectByClassid;
+exports.addResult = addResult;
 exports.dashboard = dashboard;
 exports.resultDashboard = resultDashboard;
 exports.addClass = addClass;

@@ -21,7 +21,7 @@ const handleChange = async (e) => {
     const inp = document.createElement("input");
     inp.classList.add("form-control", "text-style");
 
-    inp.setAttribute("name", "subName" + idx);
+    inp.setAttribute("name",  subject);
     inp.setAttribute("placeholder", "enter marks");
     inp.setAttribute("type", "number");
     inpdiv.appendChild(inp);
