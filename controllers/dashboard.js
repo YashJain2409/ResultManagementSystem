@@ -5,20 +5,25 @@ const HttpError = require("../models/http-error");
 const mongoose = require("mongoose");
 
 const dashboard = (req, res, next) => {
-  res.render("dashboard");
+  if (req.isAuthenticated()) res.render("dashboard");
+  else res.redirect("/admin/login");
 };
 
 const classDashboard = (req, res, next) => {
-  res.render("class");
+  if (req.isAuthenticated()) res.render("class");
+  else res.redirect("/admin/login");
 };
 
 const studentDashboard = (req, res, next) => {
-  res.render("students");
+  if (req.isAuthenticated()) res.render("students");
+  else res.redirect("admin/login");
 };
 
 const resultDashboard = async (req, res, next) => {
-  const classIds = await Class.find({}, "_id");
-  res.render("result", { classes: classIds });
+  if (req.isAuthenticated()) {
+    const classIds = await Class.find({}, "_id");
+    res.render("result", { classes: classIds });
+  } else res.redirect("/admin/login");
 };
 
 const getClass = async (req, res, next) => {
