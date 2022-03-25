@@ -1,16 +1,10 @@
 const express = require("express");
-const connectEnsureLogin = require("connect-ensure-login");
 
 const dashboardControllers = require("../controllers/dashboard");
 
 const Router = express.Router();
 
 Router.get("/", dashboardControllers.dashboard);
-
-Router.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/admin/login");
-});
 
 Router.get("/getClasses", dashboardControllers.getClass);
 

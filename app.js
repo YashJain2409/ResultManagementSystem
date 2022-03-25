@@ -65,4 +65,3 @@ mongoose
     console.log(err);
   });
 
-// User.register({username:'poojan12'}, 'poojan');
