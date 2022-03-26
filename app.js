@@ -8,7 +8,7 @@ const session = require("express-session");
 const mongoose = require("mongoose");
 const User = require("./models/admin");
 const app = express();
-
+const Student = require("./models/student");
 const adminRoutes = require("./routes/admin");
 const dashboardRoutes = require("./routes/dashboard");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,8 +34,22 @@ passport.deserializeUser(User.deserializeUser());
 app.set("view engine", "ejs");
 const port = 3000;
 
-app.get("/", (req, res, next) => {
+app.get("/", (req, res) => {
   res.render("student", { navLink: "Admin Login" });
+});
+
+app.post("/", async (req, res) => {
+  const enrolment_no = req.body.enrolment_no;
+  const doc = await Student.findOne({ _id: enrolment_no })
+    .populate("class_id")
+    .populate("result");
+  res.render("studentResult", {
+    enrolment_no: enrolment_no,
+    studentName: doc.name,
+    studentBranch: doc.class_id.branch,
+    studentSem: doc.class_id.sem,
+    studentResult: doc.result[0].result,
+  });
 });
 
 app.get("/logout", (req, res) => {
@@ -64,4 +78,3 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
