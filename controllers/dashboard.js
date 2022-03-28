@@ -109,9 +109,12 @@ const subjectByClassid = async (req, res) => {
 };
 
 const addResult = async (req, res) => {
+  const classIds = await Class.find({}, "_id");
   const classDoc = await Class.findById(req.body.class_id);
-  const studentDoc = await Student.findById(req.body.enrolment_no);
   const subjects = classDoc.subjects;
+  const studentDoc = await Student.findById(req.body.enrolment_no);
+  if (studentDoc.class_id != req.body.class_id)
+    res.render("result", { classes: classIds });
   let result = [];
   subjects.forEach((subject) => {
     const marks = req.body[subject];
@@ -130,15 +133,13 @@ const addResult = async (req, res) => {
     const sess = await mongoose.startSession();
     await sess.startTransaction();
     await createdResult.save({ session: sess });
-    classDoc.result.push(createdResult);
-    await classDoc.save({ session: sess });
     studentDoc.result.push(createdResult);
     await studentDoc.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
     return next(new HttpError("creating result failed", 500));
   }
-  const classIds = await Class.find({}, "_id");
+
   res.render("result", { classes: classIds });
 };
 

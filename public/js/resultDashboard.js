@@ -1,6 +1,7 @@
 const handleChange = async (e) => {
   const form = document.getElementById("result-form");
-  console.log(form.children);
+  if(document.contains(document.getElementById("subjects")))
+     document.getElementById("subjects").remove();
   const cid = e.target.value;
   const params = new URLSearchParams({
     cid: cid,
@@ -9,7 +10,10 @@ const handleChange = async (e) => {
 
   const json = await response.json();
   const subjects = json.subjects;
+  const parentdiv = document.createElement("div");
+  parentdiv.setAttribute("id","subjects");
   subjects.forEach((subject, idx) => {
+    
     const mydiv = document.createElement("div");
     mydiv.classList.add("form-group", "row");
     const mylab = document.createElement("label");
@@ -27,8 +31,10 @@ const handleChange = async (e) => {
     inpdiv.appendChild(inp);
     mydiv.appendChild(mylab);
     mydiv.appendChild(inpdiv);
-    form.insertBefore(mydiv, form.children[2]);
+    parentdiv.appendChild(mydiv);
+   
   });
+  form.insertBefore(parentdiv, form.children[2]);
 };
 document
   .getElementById("dropdown-classid")
