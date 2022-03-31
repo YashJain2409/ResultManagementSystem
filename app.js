@@ -9,8 +9,10 @@ const mongoose = require("mongoose");
 const User = require("./models/admin");
 const app = express();
 const Student = require("./models/student");
+const Result = require("./models/result");
 const adminRoutes = require("./routes/admin");
 const dashboardRoutes = require("./routes/dashboard");
+const resultRoutes = require("./routes/result");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
@@ -38,24 +40,14 @@ app.get("/", (req, res) => {
   res.render("student", { navLink: "Admin Login" });
 });
 
-app.post("/", async (req, res) => {
-  const enrolment_no = req.body.enrolment_no;
-  const doc = await Student.findOne({ _id: enrolment_no })
-    .populate("class_id")
-    .populate("result");
-  res.render("studentResult", {
-    enrolment_no: enrolment_no,
-    studentName: doc.name,
-    studentBranch: doc.class_id.branch,
-    studentSem: doc.class_id.sem,
-    studentResult: doc.result[0].result,
-  });
-});
+
 
 app.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/admin/login");
 });
+
+app.use("/result",resultRoutes);
 
 app.use("/admin", adminRoutes);
 

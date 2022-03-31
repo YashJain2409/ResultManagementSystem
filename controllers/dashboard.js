@@ -73,7 +73,6 @@ const deleteClass = async (req, res, next) => {
 
 const addStudents = async (req, res, next) => {
   const { cid, name, enrolment_no } = req.body;
-  console.log(cid);
   const createdStudent = new Student({
     _id: enrolment_no,
     name: name,
@@ -133,6 +132,8 @@ const addResult = async (req, res) => {
     const sess = await mongoose.startSession();
     await sess.startTransaction();
     await createdResult.save({ session: sess });
+    classDoc.result.push(createdResult);
+    await classDoc.save({ session: sess });
     studentDoc.result.push(createdResult);
     await studentDoc.save({ session: sess });
     await sess.commitTransaction();

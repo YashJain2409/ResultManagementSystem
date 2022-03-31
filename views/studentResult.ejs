@@ -11,8 +11,8 @@
       integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/styles.css" />
-    <link rel="stylesheet" href="/navbar.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
 
     <title>Result</title>
   </head>
@@ -35,12 +35,43 @@
     <section style="margin-top: 100px">
       <div class="container">
         <p class="text-sm-start">Name : <%= studentName %></p>
-        <p class="text-xl-start">Enrolment Number: <%= enrolment_no %></p>
-        <p class="text-xl-start">Semester: <%= studentSem %></p>
-        <p class="text-xl-start">Branch : <%= studentBranch %></p>
+        <p class="text-xl-start">Enrolment Number: <span id="enrolment_no"><%= enrolment_no %></span></p>
+        <p class="text-xl-start">
+          Semester: <span id="sem"><%= studentSem %></span>
+        </p>
+        <p class="text-xl-start">Branch : <span id="branch"><%= studentBranch %></span></p>
       </div>
       <br />
-
+      <div class="container">
+        <p
+          class="text-xl-start"
+          style="display: inline-block; margin-right: 16px"
+        >
+          Select Semester
+        </p>
+        <div class="btn-group" id="dropdown-sem">
+          <button
+            type="button"
+            class="btn btn-dark dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            id="dropdown-button"
+          >
+            Sem - <%= studentSem %>
+          </button>
+        </div>
+      </div>
+      <div class="container">
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          style="margin-left: 130px; margin-top: 10px"
+          id="searchResult"
+        >
+          Search
+        </button>
+      </div>
+      <br />
       <div class="container">
         <table class="table table-hover">
           <thead class="thead-dark">
@@ -51,9 +82,8 @@
               <th scope="col">OUT OF</th>
             </tr>
           </thead>
-          <tbody>
-            <% var cnt = 1 %>
-            <% studentResult.forEach(function(result){ %>
+          <tbody id="table-body">
+            <% var cnt = 1 %> <% studentResult.forEach(function(result){ %>
             <tr>
               <th scope="row"><%= cnt++ %></th>
               <td><%= result.name %></td>
@@ -68,11 +98,17 @@
           type="button"
           class="btn btn-outline-dark d-print-none"
           onclick="window.print()"
-          style="margin-top: 16px;"
+          style="margin-top: 16px"
         >
           Print Result
         </button>
       </div>
     </section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/studentResult.js"></script>
   </body>
 </html>
