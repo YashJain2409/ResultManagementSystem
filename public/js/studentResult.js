@@ -35,20 +35,20 @@ searchBtn.onclick = () => {
     tbody.removeChild(tbody.lastChild);
   }
   let i = 1;
-  
-  resultData.forEach(item => {
-       const row = document.createElement("tr");
-       const th = document.createElement("th");
-       th.innerHTML = i;
-       th.setAttribute("scope","row");
-       const td = document.createElement("td");
-       td.innerHTML = item.name;
-       const td1 = document.createElement("td");
-       td1.innerHTML = item.score;
-       const td2 = document.createElement("td");
-       td2.innerHTML = 70;
-       row.append(th,td,td1,td2);
-       tbody.appendChild(row);
-  });
-}
 
+  resultData.forEach((item) => {
+    const row = document.createElement("tr");
+    const th = document.createElement("th");
+    th.innerHTML = i;
+    th.setAttribute("scope", "row");
+    const td = document.createElement("td");
+    td.innerHTML = item.name;
+    const td1 = document.createElement("td");
+    td1.innerHTML = item.score;
+    const td2 = document.createElement("td");
+    td2.innerHTML = 70;
+    row.append(th, td, td1, td2);
+    tbody.appendChild(row);
+    i++;
+  });
+};

@@ -27,13 +27,14 @@ const resultDashboard = async (req, res, next) => {
 };
 
 const getClass = async (req, res, next) => {
+  console.log("fdsfadf");
   let classes;
   try {
     classes = await Class.find();
   } catch (err) {
     return next(new HttpError("couldn't get classes", 500));
   }
-  console.log(classes[0].toObject({ getters: true }));
+  res.status(200).json({classes : classes});
 };
 
 const addClass = async (req, res, next) => {
