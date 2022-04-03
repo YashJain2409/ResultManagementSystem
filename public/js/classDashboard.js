@@ -9,7 +9,6 @@ async function createClassTable() {
 
   const json = await response.json();
   const classes = json.classes;
-  console.log(classes);
   let i = 1;
   classes.forEach((item) => {
     const row = document.createElement("tr");
@@ -28,7 +27,22 @@ async function createClassTable() {
     td2.innerHTML = item.sem;
     const td3 = document.createElement("td");
     td3.appendChild(btn);
-    row.append(th, td, td1, td2, td3);
+    const td4 = document.createElement("td");
+    const iconDiv = document.createElement("div");
+    const span = document.createElement("span");
+    const span1 = document.createElement("span");
+    const it = document.createElement("i");
+    it.classList.add("fa-solid","fa-trash");
+    span.appendChild(it);
+    span.setAttribute("style","font-size: 20px; margin-right: 10px; cursor: pointer;")
+    const it1 = document.createElement("i");
+    it1.classList.add("fa-solid","fa-pen-to-square");
+    span1.setAttribute("style","font-size: 20px; cursor: pointer;")
+    span1.appendChild(it1);
+    iconDiv.append(span,span1);
+    iconDiv.setAttribute("style","margin-top: 8px;")
+    td4.append(iconDiv);
+    row.append(th, td, td1, td2, td3,td4);
     tbody.appendChild(row);
     i++;
     const ol = document.createElement("ol");

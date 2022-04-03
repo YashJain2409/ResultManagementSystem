@@ -16,7 +16,7 @@ const classDashboard = (req, res, next) => {
 
 const studentDashboard = (req, res, next) => {
   if (req.isAuthenticated()) res.render("students");
-  else res.redirect("admin/login");
+  else res.redirect("/admin/login");
 };
 
 const resultDashboard = async (req, res, next) => {
@@ -27,14 +27,19 @@ const resultDashboard = async (req, res, next) => {
 };
 
 const getClass = async (req, res, next) => {
-  console.log("fdsfadf");
   let classes;
   try {
     classes = await Class.find();
   } catch (err) {
     return next(new HttpError("couldn't get classes", 500));
   }
-  res.status(200).json({classes : classes});
+  res.status(200).json({ classes: classes });
+};
+
+const getStudents = async (req, res) => {
+  students = await Student.find();
+  console.log(students);
+  res.status(200).json({ students: students });
 };
 
 const addClass = async (req, res, next) => {
@@ -155,3 +160,4 @@ exports.getClass = getClass;
 exports.studentDashboard = studentDashboard;
 exports.classDashboard = classDashboard;
 exports.deleteClass = deleteClass;
+exports.getStudents = getStudents;

@@ -9,6 +9,7 @@
       integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
       crossorigin="anonymous"
     />
+    <script src="https://kit.fontawesome.com/05332581fb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/dashboardForms.css" />
     <title>Dashboard | Students</title>
@@ -47,7 +48,7 @@
           <label class="col-sm-2 col-form-label label-style">Enrolment_no</label>
           <div class="col-sm-10">
             <input
-              type="number"
+              type="text"
               class="form-control text-style"
               placeholder="Enter enrolment no"
               name="enrolment_no"
@@ -65,5 +66,22 @@
         </div>
       </form>
     </div>
+    <div class="container" style="margin-top: 70px;">
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">NO.</th>
+            <th scope="col">Class id</th>
+            <th scope="col">Enrolment No.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+    
+        </tbody>
+      </table>
+    </div>
+    <script src="/js/studentDashboard.js"></script>
   </body>
 </html>
