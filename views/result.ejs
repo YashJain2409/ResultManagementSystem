@@ -12,6 +12,8 @@
     />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/dashboardForms.css" />
+    <link rel="stylesheet" href="/css/modal.css" />
+    
     <title>Dashboard | results</title>
   </head>
   <body>
@@ -57,6 +59,37 @@
         </div>
       </form>
     </div>
+    <div class="container" style="margin-top: 70px;">
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">NO.</th>
+            <th scope="col">Enrolment_no</th>
+            <th scope="col">Class id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Results</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+    
+        </tbody>
+      </table>
+    </div>
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Result <p id = "sem"></p></h2>
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body" id="result">
+        </div>
+      </div>
+    
+    </div>
     <script src="/js/resultDashboard.js"></script> 
+    <script src="https://kit.fontawesome.com/05332581fb.js" crossorigin="anonymous"></script>
   </body>
 </html>

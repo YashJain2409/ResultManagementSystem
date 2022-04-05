@@ -10,6 +10,8 @@ Router.get("/getClasses", dashboardControllers.getClass);
 
 Router.get("/getStudents",dashboardControllers.getStudents);
 
+Router.get("/getResults",dashboardControllers.getResults);
+
 Router.get("/classes", dashboardControllers.classDashboard);
 
 Router.post("/classes", dashboardControllers.addClass);

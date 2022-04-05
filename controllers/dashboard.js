@@ -37,9 +37,14 @@ const getClass = async (req, res, next) => {
 };
 
 const getStudents = async (req, res) => {
-  students = await Student.find();
+  const students = await Student.find();
   console.log(students);
   res.status(200).json({ students: students });
+};
+
+const getResults = async (req, res) => {
+  const results = await Result.find().populate("class_id").populate("student_id");
+  res.status(200).json({ results: results });
 };
 
 const addClass = async (req, res, next) => {
@@ -161,3 +166,4 @@ exports.studentDashboard = studentDashboard;
 exports.classDashboard = classDashboard;
 exports.deleteClass = deleteClass;
 exports.getStudents = getStudents;
+exports.getResults = getResults;
