@@ -2,7 +2,6 @@ async function createStudentTable() {
   const tbody = document.getElementById("table-body");
   const response = await fetch("/dashboard/getStudents");
   const json = await response.json();
-  console.log(json.students);
   const students = json.students;
   let i = 1;
   students.forEach((student) => {
@@ -21,17 +20,16 @@ async function createStudentTable() {
     const span = document.createElement("span");
     const span1 = document.createElement("span");
     const it = document.createElement("i");
-    it.classList.add("fa-solid","fa-trash");
+    it.classList.add("fa-solid", "fa-trash");
     span.appendChild(it);
-    span.setAttribute("style","font-size: 20px; margin-right: 10px; cursor: pointer;")
-    const it1 = document.createElement("i");
-    it1.classList.add("fa-solid","fa-pen-to-square");
-    span1.setAttribute("style","font-size: 20px; cursor: pointer;")
-    span1.appendChild(it1);
-    iconDiv.append(span,span1);
-    iconDiv.setAttribute("style","margin-top: 0;")
+    span.setAttribute(
+      "style",
+      "font-size: 20px; margin-right: 10px; cursor: pointer;"
+    );
+    iconDiv.append(span);
+    iconDiv.setAttribute("style", "margin-top: 0;");
     td3.append(iconDiv);
-    row.append(th, td, td1, td2,td3);
+    row.append(th, td, td1, td2, td3);
     tbody.appendChild(row);
     i++;
   });

@@ -48,7 +48,6 @@ async function createResultTable() {
 
   const json = await response.json();
   const results = json.results;
-  console.log(results);
   let i = 1;
   results.forEach((item) => {
     const row = document.createElement("tr");
@@ -102,7 +101,6 @@ async function createResultTable() {
       }
       modalBody.appendChild(ol);
       modal.style.display = "block";
-      console.log("dfsfsdf");
     };
   });
   

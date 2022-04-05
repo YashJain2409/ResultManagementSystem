@@ -32,44 +32,40 @@ async function createClassTable() {
     const span = document.createElement("span");
     const span1 = document.createElement("span");
     const it = document.createElement("i");
-    it.classList.add("fa-solid","fa-trash");
+    it.classList.add("fa-solid", "fa-trash");
     span.appendChild(it);
-    span.setAttribute("style","font-size: 20px; margin-right: 10px; cursor: pointer;")
-    const it1 = document.createElement("i");
-    it1.classList.add("fa-solid","fa-pen-to-square");
-    span1.setAttribute("style","font-size: 20px; cursor: pointer;")
-    span1.appendChild(it1);
-    iconDiv.append(span,span1);
-    iconDiv.setAttribute("style","margin-top: 8px;")
+    span.setAttribute(
+      "style",
+      "font-size: 20px; margin-right: 10px; cursor: pointer;"
+    );
+    iconDiv.append(span);
+    iconDiv.setAttribute("style", "margin-top: 8px;");
     td4.append(iconDiv);
-    row.append(th, td, td1, td2, td3,td4);
+    row.append(th, td, td1, td2, td3, td4);
     tbody.appendChild(row);
     i++;
     const ol = document.createElement("ol");
-    ol.classList.add("list-group","list-group-flush");
-    item.subjects.forEach(subject => {
-        const listItem = document.createElement("li");
-        listItem.classList.add("list-group-item");
-        listItem.innerHTML = subject;
-        ol.appendChild(listItem);
+    ol.classList.add("list-group", "list-group-flush");
+    item.subjects.forEach((subject) => {
+      const listItem = document.createElement("li");
+      listItem.classList.add("list-group-item");
+      listItem.innerHTML = subject;
+      ol.appendChild(listItem);
     });
     btn.onclick = function () {
       const modalBody = document.getElementById("subjects");
-     while (modalBody.firstChild) {
-     modalBody.removeChild(modalBody.lastChild);
-     }
-     modalBody.appendChild(ol);
+      while (modalBody.firstChild) {
+        modalBody.removeChild(modalBody.lastChild);
+      }
+      modalBody.appendChild(ol);
       modal.style.display = "block";
     };
   });
-
-  
 }
 
-
 span.onclick = function () {
-    modal.style.display = "none";
-  };
+  modal.style.display = "none";
+};
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";

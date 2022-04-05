@@ -38,7 +38,6 @@ const getClass = async (req, res, next) => {
 
 const getStudents = async (req, res) => {
   const students = await Student.find();
-  console.log(students);
   res.status(200).json({ students: students });
 };
 
