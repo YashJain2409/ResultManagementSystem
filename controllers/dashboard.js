@@ -42,7 +42,9 @@ const getStudents = async (req, res) => {
 };
 
 const getResults = async (req, res) => {
-  const results = await Result.find().populate("class_id").populate("student_id");
+  const results = await Result.find()
+    .populate("class_id")
+    .populate("student_id");
   res.status(200).json({ results: results });
 };
 
@@ -63,8 +65,6 @@ const addClass = async (req, res, next) => {
   }
   res.render("class");
 };
-
-
 
 const addStudents = async (req, res, next) => {
   const { cid, name, enrolment_no } = req.body;
@@ -140,33 +140,35 @@ const addResult = async (req, res) => {
 };
 
 const deleteClass = async (req, res, next) => {
-  const classId = req.params.cid;
-  let classDoc;
+  const id = req.query.cid;
   try {
-    classDoc = await Class.findById(classId);
-  } catch (err) {
+    await Class.deleteOne({ _id: id });
+  } catch (e) {
     return next(new HttpError("could not delete", 500));
   }
-  if (!classDoc) return next(new HttpError("could not find", 404));
-  try {
-    await classDoc.remove();
-  } catch (err) {
-    return next(new HttpError("could not delete", 500));
-  }
-  res.status(200).json({ message: "deleted place" });
+  res.status(200).json({ message: "deleted" });
 };
 
-const deleteResult = async(req,res) => {
-   const id = mongoose.Types.ObjectId(req.query.rid);
-   console.log(id);
-   try{
-   await Result.deleteOne({_id: id});
-   }catch(err){
+const deleteResult = async (req, res, next) => {
+  const id = mongoose.Types.ObjectId(req.query.rid);
+  try {
+    await Result.deleteOne({ _id: id });
+  } catch (err) {
     return next(new HttpError("could not delete", 500));
-   }
-   
-   res.json({message : "deleted"});
-}
+  }
+
+  res.json({ message: "deleted" });
+};
+
+const deleteStudents = async (req, res, next) => {
+  const id = req.query.sid;
+  try {
+    await Student.deleteOne({ _id: id });
+  } catch (e) {
+    return next(new HttpError("could not delete", 500));
+  }
+  res.status(200).json({ message: "deleted" });
+};
 
 exports.addStudents = addStudents;
 exports.subjectByClassid = subjectByClassid;
@@ -181,3 +183,4 @@ exports.deleteClass = deleteClass;
 exports.getStudents = getStudents;
 exports.getResults = getResults;
 exports.deleteResult = deleteResult;
+exports.deleteStudents = deleteStudents;

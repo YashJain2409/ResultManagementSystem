@@ -26,8 +26,10 @@ Router.get("/results/:cid", dashboardControllers.subjectByClassid);
 
 Router.post("/results", dashboardControllers.addResult);
 
-Router.delete("/classes/:cid", dashboardControllers.deleteClass);
+Router.delete("/classes", dashboardControllers.deleteClass);
 
 Router.delete("/results", dashboardControllers.deleteResult);
+
+Router.delete("/students", dashboardControllers.deleteStudents);
 
 module.exports = Router;

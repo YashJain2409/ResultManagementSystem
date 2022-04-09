@@ -1,5 +1,8 @@
 async function createStudentTable() {
   const tbody = document.getElementById("table-body");
+  while (tbody.firstChild) {
+    tbody.removeChild(tbody.lastChild);
+  }
   const response = await fetch("/dashboard/getStudents");
   const json = await response.json();
   const students = json.students;
@@ -18,7 +21,6 @@ async function createStudentTable() {
     const td3 = document.createElement("td");
     const iconDiv = document.createElement("div");
     const span = document.createElement("span");
-    const span1 = document.createElement("span");
     const it = document.createElement("i");
     it.classList.add("fa-solid", "fa-trash");
     span.appendChild(it);
@@ -26,11 +28,25 @@ async function createStudentTable() {
       "style",
       "font-size: 20px; margin-right: 10px; cursor: pointer;"
     );
+    span.setAttribute("id", "btn-" + i.toString());
     iconDiv.append(span);
     iconDiv.setAttribute("style", "margin-top: 0;");
     td3.append(iconDiv);
     row.append(th, td, td1, td2, td3);
     tbody.appendChild(row);
+    const delBtn = document.getElementById("btn-" + i.toString());
+    delBtn.addEventListener("click", async (e) => {
+      const data =
+        delBtn.parentElement.parentElement.parentElement.getElementsByTagName(
+          "td"
+        )[1];
+      const id = data.innerHTML;
+      const response = await fetch(`/dashboard/students/?sid=${id}`, {
+        method: "DELETE",
+      });
+      const json = await response.json();
+      if (json.message == "deleted") location.reload();
+    });
     i++;
   });
 }

@@ -103,7 +103,6 @@ async function createResultTable() {
           "input"
         )[0];
       const id = inp.value;
-      console.log(id);
       const response = await fetch(`/dashboard/results/?rid=${id}`, {
         method: "DELETE",
       });
