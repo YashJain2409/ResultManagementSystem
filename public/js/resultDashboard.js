@@ -42,15 +42,28 @@ var span = document.getElementsByClassName("close")[0];
 
 var modal = document.getElementById("myModal");
 
-async function createResultTable() {
-  const tbody = document.getElementById("table-body");
+async function getResultData() {
   const response = await fetch("/dashboard/getResults");
 
   const json = await response.json();
   const results = json.results;
+  return { results: results };
+}
+
+async function createResultTable() {
+  const tbody = document.getElementById("table-body");
+  while (tbody.firstChild) {
+    tbody.removeChild(tbody.lastChild);
+  }
+  const data = await getResultData();
+  const results = data.results;
+
   let i = 1;
   results.forEach((item) => {
     const row = document.createElement("tr");
+    const inp = document.createElement("input");
+    inp.setAttribute("type", "hidden");
+    inp.setAttribute("value", item._id);
     const th = document.createElement("th");
     const btn = document.createElement("button");
     btn.classList.add("btn", "btn-dark");
@@ -76,11 +89,27 @@ async function createResultTable() {
       "style",
       "font-size: 20px; margin-right: 10px; cursor: pointer;"
     );
+    span.setAttribute("id", "btn-" + i.toString());
+
     iconDiv.append(span);
     iconDiv.setAttribute("style", "margin-top: 0;");
     td4.append(iconDiv);
-    row.append(th, td, td1, td2, td3, td4);
+    row.append(inp, th, td, td1, td2, td3, td4);
     tbody.appendChild(row);
+    const delBtn = document.getElementById("btn-" + i.toString());
+    delBtn.addEventListener("click", async (e) => {
+      const inp =
+        delBtn.parentElement.parentElement.parentElement.getElementsByTagName(
+          "input"
+        )[0];
+      const id = inp.value;
+      console.log(id);
+      const response = await fetch(`/dashboard/results/?rid=${id}`, {
+        method: "DELETE",
+      });
+      const json = await response.json();
+      if (json.message == "deleted") location.reload();
+    });
     i++;
     const ol = document.createElement("ol");
     ol.classList.add("list-group", "list-group-flush");
@@ -93,7 +122,7 @@ async function createResultTable() {
     btn.onclick = function () {
       const p = document.getElementById("sem");
       p.classList.add("lead");
-      p.setAttribute("style","margin-top : 3px;")
+      p.setAttribute("style", "margin-top : 3px;");
       p.innerHTML = "Sem : " + item.class_id.sem;
       const modalBody = document.getElementById("result");
       while (modalBody.firstChild) {
@@ -103,7 +132,6 @@ async function createResultTable() {
       modal.style.display = "block";
     };
   });
-  
 }
 
 span.onclick = function () {

@@ -8,15 +8,13 @@ Router.get("/", dashboardControllers.dashboard);
 
 Router.get("/getClasses", dashboardControllers.getClass);
 
-Router.get("/getStudents",dashboardControllers.getStudents);
+Router.get("/getStudents", dashboardControllers.getStudents);
 
-Router.get("/getResults",dashboardControllers.getResults);
+Router.get("/getResults", dashboardControllers.getResults);
 
 Router.get("/classes", dashboardControllers.classDashboard);
 
 Router.post("/classes", dashboardControllers.addClass);
-
-Router.delete("/classes/:cid", dashboardControllers.deleteClass);
 
 Router.get("/students", dashboardControllers.studentDashboard);
 
@@ -27,5 +25,9 @@ Router.get("/results", dashboardControllers.resultDashboard);
 Router.get("/results/:cid", dashboardControllers.subjectByClassid);
 
 Router.post("/results", dashboardControllers.addResult);
+
+Router.delete("/classes/:cid", dashboardControllers.deleteClass);
+
+Router.delete("/results", dashboardControllers.deleteResult);
 
 module.exports = Router;

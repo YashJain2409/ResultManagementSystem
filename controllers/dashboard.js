@@ -64,22 +64,7 @@ const addClass = async (req, res, next) => {
   res.render("class");
 };
 
-const deleteClass = async (req, res, next) => {
-  const classId = req.params.cid;
-  let classDoc;
-  try {
-    classDoc = await Class.findById(classId);
-  } catch (err) {
-    return next(new HttpError("could not delete", 500));
-  }
-  if (!classDoc) return next(new HttpError("could not find", 404));
-  try {
-    await classDoc.remove();
-  } catch (err) {
-    return next(new HttpError("could not delete", 500));
-  }
-  res.status(200).json({ message: "deleted place" });
-};
+
 
 const addStudents = async (req, res, next) => {
   const { cid, name, enrolment_no } = req.body;
@@ -154,6 +139,35 @@ const addResult = async (req, res) => {
   res.render("result", { classes: classIds });
 };
 
+const deleteClass = async (req, res, next) => {
+  const classId = req.params.cid;
+  let classDoc;
+  try {
+    classDoc = await Class.findById(classId);
+  } catch (err) {
+    return next(new HttpError("could not delete", 500));
+  }
+  if (!classDoc) return next(new HttpError("could not find", 404));
+  try {
+    await classDoc.remove();
+  } catch (err) {
+    return next(new HttpError("could not delete", 500));
+  }
+  res.status(200).json({ message: "deleted place" });
+};
+
+const deleteResult = async(req,res) => {
+   const id = mongoose.Types.ObjectId(req.query.rid);
+   console.log(id);
+   try{
+   await Result.deleteOne({_id: id});
+   }catch(err){
+    return next(new HttpError("could not delete", 500));
+   }
+   
+   res.json({message : "deleted"});
+}
+
 exports.addStudents = addStudents;
 exports.subjectByClassid = subjectByClassid;
 exports.addResult = addResult;
@@ -166,3 +180,4 @@ exports.classDashboard = classDashboard;
 exports.deleteClass = deleteClass;
 exports.getStudents = getStudents;
 exports.getResults = getResults;
+exports.deleteResult = deleteResult;
