@@ -7,6 +7,7 @@ A web app for managing college results.
 ## Built with
 - [node](https://nodejs.org/en/)
 - [express](https://expressjs.com/)
+- [bootstrap](https://getbootstrap.com/)
 ## Set up your local environment
 
 fork [this](https://github.com/YashJain2409/ResultManagementSystem) repository
