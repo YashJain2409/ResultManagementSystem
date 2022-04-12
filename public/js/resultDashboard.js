@@ -110,6 +110,7 @@ async function createResultTable() {
       if (json.message == "deleted") location.reload();
     });
     i++;
+    
     const ol = document.createElement("ol");
     ol.classList.add("list-group", "list-group-flush");
     item.result.forEach((resultItem) => {
@@ -131,6 +132,12 @@ async function createResultTable() {
       modal.style.display = "block";
     };
   });
+  $(document).ready(function () {
+    $('#result-table').DataTable();
+  });
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
 }
 
 span.onclick = function () {
