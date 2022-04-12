@@ -76,6 +76,12 @@ async function createClassTable() {
       modal.style.display = "block";
     };
   });
+  $(document).ready(function () {
+    $('#class-table').DataTable();
+  });
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
 }
 
 span.onclick = function () {

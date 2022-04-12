@@ -16,6 +16,7 @@
     "express": "^4.17.2",
     "express-session": "^1.17.2",
     "mongoose": "^6.2.1",
+    "nodemon": "^2.0.15",
     "passport": "^0.5.2",
     "passport-local-mongoose": "^7.0.0",
     "path": "^0.12.7"
