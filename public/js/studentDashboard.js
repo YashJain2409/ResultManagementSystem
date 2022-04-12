@@ -49,6 +49,12 @@ async function createStudentTable() {
     });
     i++;
   });
+  $(document).ready(function () {
+    $("#student-table").DataTable();
+  });
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
 }
 
 createStudentTable();
