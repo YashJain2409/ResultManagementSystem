@@ -8,7 +8,7 @@ const resultSchema = new Schema({
   result: [
     {
       name: { type: String, required: true },
-      score: { type: String, required: true },
+      score: { type: Number, required: true },
     },
   ],
 });

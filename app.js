@@ -3,19 +3,22 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const path = require("path");
 const passport = require("passport");
 const session = require("express-session");
 const mongoose = require("mongoose");
 const User = require("./models/admin");
 const app = express();
-const Student = require("./models/student");
-const Result = require("./models/result");
 const adminRoutes = require("./routes/admin");
 const dashboardRoutes = require("./routes/dashboard");
 const resultRoutes = require("./routes/result");
+const excelRoutes = require("./routes/excelUpload");
+
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static("public"));
+app.use(express.static(path.resolve(__dirname, "public")));
 
 app.use(
   session({
@@ -40,18 +43,18 @@ app.get("/", (req, res) => {
   res.render("student", { navLink: "Admin Login" });
 });
 
-
-
 app.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/admin/login");
 });
 
-app.use("/result",resultRoutes);
+app.use("/result", resultRoutes);
 
 app.use("/admin", adminRoutes);
 
 app.use("/dashboard", dashboardRoutes);
+
+app.use("/excel", excelRoutes);
 
 app.use((error, req, res, next) => {
   if (res.headerSent) {

@@ -1,3 +1,7 @@
+$(document).ready(function () {
+  bsCustomFileInput.init()
+})
+
 const handleChange = async (e) => {
   const form = document.getElementById("result-form");
   if (document.contains(document.getElementById("subjects")))
@@ -38,9 +42,14 @@ document
   .getElementById("dropdown-classid")
   .addEventListener("change", handleChange);
 
-var span = document.getElementsByClassName("close")[0];
+var resultSpan = document.getElementById("resultSpan");
+console.log(resultSpan);
+
+var fileSpan = document.getElementById("fileSpan");
 
 var modal = document.getElementById("myModal");
+
+var fileModal = document.getElementById("fileModal");
 
 async function getResultData() {
   const response = await fetch("/dashboard/getResults");
@@ -110,7 +119,7 @@ async function createResultTable() {
       if (json.message == "deleted") location.reload();
     });
     i++;
-    
+
     const ol = document.createElement("ol");
     ol.classList.add("list-group", "list-group-flush");
     item.result.forEach((resultItem) => {
@@ -133,20 +142,31 @@ async function createResultTable() {
     };
   });
   $(document).ready(function () {
-    $('#result-table').DataTable();
+    $("#result-table").DataTable();
   });
   if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
   }
 }
 
-span.onclick = function () {
+const fileBtn = document.getElementById("fileBtn");
+
+fileBtn.addEventListener("click", (e) => {
+  fileModal.style.display = "block";
+});
+resultSpan.onclick = function () {
   modal.style.display = "none";
+};
+fileSpan.onclick = function (e) {
+  console.log(e.target);
+  fileModal.style.display = "none";
 };
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 };
+
+
 
 createResultTable();
