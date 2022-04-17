@@ -43,7 +43,6 @@ document
   .addEventListener("change", handleChange);
 
 var resultSpan = document.getElementById("resultSpan");
-console.log(resultSpan);
 
 var fileSpan = document.getElementById("fileSpan");
 
@@ -158,7 +157,6 @@ resultSpan.onclick = function () {
   modal.style.display = "none";
 };
 fileSpan.onclick = function (e) {
-  console.log(e.target);
   fileModal.style.display = "none";
 };
 window.onclick = function (event) {

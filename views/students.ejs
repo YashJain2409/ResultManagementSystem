@@ -20,6 +20,7 @@
     />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/dashboardForms.css" />
+    <link rel="stylesheet" href="/css/modal.css">
     <title>Dashboard | Students</title>
   </head>
   <body>
@@ -75,6 +76,11 @@
         </div>
       </form>
     </div>
+    <div class="form-style">
+      <button class="btn btn-dark" style="width: 125px" id="fileBtn">
+        Upload File
+      </button>
+    </div>
     <div class="container" style="margin-top: 70px">
       <table class="table table-hover" id="student-table">
         <thead class="thead-dark">
@@ -88,6 +94,46 @@
         </thead>
         <tbody id="table-body"></tbody>
       </table>
+    </div>
+    <div id="fileModal" class="modal">
+      <!-- Modal content -->
+      <div class="file-modal-content">
+        <div class="modal-header">
+          <h2>Upload File</h2>
+          <span class="close" id="fileSpan">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form
+            action="/excel/uploadStudent"
+            enctype="multipart/form-data"
+            method="post"
+          >
+            <div class="custom-file" style="margin-top: 15px">
+              <input
+                type="file"
+                class="custom-file-input"
+                id="customFile"
+                name="csv"
+                accept="text/csv"
+                style="cursor: pointer"
+              />
+              <label
+                class="custom-file-label"
+                for="customFile"
+                style="cursor: pointer"
+                >Choose file</label
+              >
+            </div>
+            <button
+              type="submit"
+              class="btn btn-dark"
+              style="width: 125px; margin-top: 15px; margin-bottom: 15px"
+            >
+              Upload
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

@@ -112,28 +112,28 @@
       <!-- Modal content -->
       <div class="file-modal-content">
         <div class="modal-header">
-          <h2>
-            Upload File
-            <p id="sem"></p>
-          </h2>
+          <h2>Upload File</h2>
           <span class="close" id="fileSpan">&times;</span>
         </div>
         <div class="modal-body">
           <form
-            action="/excel/upload"
+            action="/excel/uploadResult"
             enctype="multipart/form-data"
             method="post"
           >
-            <div class="custom-file" style="margin-top: 15px;">
+            <div class="custom-file" style="margin-top: 15px">
               <input
                 type="file"
                 class="custom-file-input"
                 id="customFile"
                 name="csv"
                 accept="text/csv"
-                style="cursor: pointer;"
+                style="cursor: pointer"
               />
-              <label class="custom-file-label" for="customFile" style="cursor: pointer;"
+              <label
+                class="custom-file-label"
+                for="customFile"
+                style="cursor: pointer"
                 >Choose file</label
               >
             </div>

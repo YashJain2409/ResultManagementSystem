@@ -102,13 +102,10 @@ const subjectByClassid = async (req, res) => {
   res.status(200).json({ subjects: subjects });
 };
 
-const addResult = async (req, res) => {
-  const classIds = await Class.find({}, "_id");
+const addResult = async (req, res, next) => {
   const classDoc = await Class.findById(req.body.class_id);
   const subjects = classDoc.subjects;
   const studentDoc = await Student.findById(req.body.enrolment_no);
-  if (studentDoc.class_id != req.body.class_id)
-    res.render("result", { classes: classIds });
   let result = [];
   subjects.forEach((subject) => {
     const marks = req.body[subject];
@@ -136,7 +133,7 @@ const addResult = async (req, res) => {
     return next(new HttpError("creating result failed", 500));
   }
 
-  res.render("result", { classes: classIds });
+  res.redirect("/dashboard/results");
 };
 
 const deleteClass = async (req, res, next) => {

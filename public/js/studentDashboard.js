@@ -1,3 +1,11 @@
+$(document).ready(function () {
+  bsCustomFileInput.init()
+})
+
+var fileModal = document.getElementById("fileModal");
+
+var fileSpan = document.getElementById("fileSpan");
+
 async function createStudentTable() {
   const tbody = document.getElementById("table-body");
   while (tbody.firstChild) {
@@ -58,3 +66,14 @@ async function createStudentTable() {
 }
 
 createStudentTable();
+
+const fileBtn = document.getElementById("fileBtn");
+
+fileBtn.addEventListener("click", (e) => {
+  fileModal.style.display = "block";
+});
+
+
+fileSpan.onclick = function (e) {
+  fileModal.style.display = "none";
+};
