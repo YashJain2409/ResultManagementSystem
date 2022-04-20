@@ -41,9 +41,19 @@ const uploadResult = (req, res, next) => {
 const uploadStudent = (req, res) => {
   csv()
     .fromFile(req.file.path)
-    .then((jsonobj) => {
-      console.log(jsonobj);
+    .then(async (jsonobj) => {
+      try {
+        const students = await Student.insertMany(jsonobj);
+        students.forEach(async (student) => {
+          classDoc = await Class.findById(student.class_id);
+          classDoc.students.push(student._id);
+          await classDoc.save();
+        });
+      } catch (e) {
+        return next(new HttpError("uploading failed", 500));
+      }
     });
+  res.redirect("/dashboard/students");
 };
 
 exports.uploadResult = uploadResult;
