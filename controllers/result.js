@@ -1,25 +1,44 @@
 const Student = require("../models/student");
 const Result = require("../models/result");
 const Class = require("../models/class");
+const Http = require("../models/http-error");
 
 const resultPage = async (req, res) => {
-    const enrolment_no = req.body.enrolment_no;
-    const doc = await Student.findOne({ _id: enrolment_no }).populate("class_id");
-    const result = await Result.findOne({student_id: enrolment_no,class_id: doc.class_id._id});
-    res.render("studentResult", {
-      enrolment_no: enrolment_no,
-      studentName: doc.name,
-      studentBranch: doc.class_id.branch,
-      studentSem: doc.class_id.sem,
-      studentResult: result.result,
-    });
-}
+  const enrolment_no = req.body.enrolment_no;
+  const doc = await Student.findOne({ _id: enrolment_no }).populate("class_id");
+  if (doc == null) {
+    res.redirect("/?error=" + encodeURIComponent("Oops! No data available"));
+    return;
+  }
+  const result = await Result.findOne({
+    student_id: enrolment_no,
+    class_id: doc.class_id._id,
+  });
+  if (result == null){
+    res.redirect("/?error=" + encodeURIComponent("Oops! No data available"));
+    return;
+  }
 
-const getResult = async(req,res) => {
-    const sem = parseInt(req.query.sem);
-    const class_id = await Class.findOne({sem: sem,branch: req.query.branch},"_id");
-    const result = await Result.findOne({student_id: req.query.enrolment_no,class_id: class_id});
-    res.json({result: result.result});
-}
+  res.render("studentResult", {
+    enrolment_no: enrolment_no,
+    studentName: doc.name,
+    studentBranch: doc.class_id.branch,
+    studentSem: doc.class_id.sem,
+    studentResult: result.result,
+  });
+};
+
+const getResult = async (req, res) => {
+  const sem = parseInt(req.query.sem);
+  const class_id = await Class.findOne(
+    { sem: sem, branch: req.query.branch },
+    "_id"
+  );
+  const result = await Result.findOne({
+    student_id: req.query.enrolment_no,
+    class_id: class_id,
+  });
+  res.json({ result: result.result });
+};
 exports.resultPage = resultPage;
 exports.getResult = getResult;

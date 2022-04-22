@@ -14,8 +14,6 @@ const dashboardRoutes = require("./routes/dashboard");
 const resultRoutes = require("./routes/result");
 const excelRoutes = require("./routes/excelUpload");
 
-
-
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.resolve(__dirname, "public")));
@@ -41,6 +39,7 @@ const port = 3000;
 
 app.get("/", (req, res) => {
   res.render("student", { navLink: "Admin Login" });
+  res.end();
 });
 
 app.get("/logout", (req, res) => {

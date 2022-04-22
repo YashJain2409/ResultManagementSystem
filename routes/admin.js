@@ -10,7 +10,8 @@ Router.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/dashboard",
-    failureRedirect: "/admin/login",
+    failureRedirect:
+      "/admin/login?error=" + encodeURIComponent("Invalid Credentials"),
   })
 );
 Router.post("/", adminControllers.addUser);
