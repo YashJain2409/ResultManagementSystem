@@ -29,8 +29,12 @@ const handleChange = async (e) => {
     inp.classList.add("form-control", "text-style");
 
     inp.setAttribute("name", subject);
+
     inp.setAttribute("placeholder", "enter marks");
     inp.setAttribute("type", "number");
+    inp.setAttribute("required",true);
+    inp.setAttribute("max",70);
+    inp.setAttribute("min",0);
     inpdiv.appendChild(inp);
     mydiv.appendChild(mylab);
     mydiv.appendChild(inpdiv);
