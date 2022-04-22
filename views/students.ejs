@@ -25,7 +25,7 @@
   </head>
   <body>
     <div class="form-style">
-      <form method="post">
+      <form method="post" autocomplete="off">
         <div class="form-group row">
           <label class="col-sm-2 col-form-label label-style">Class id: </label>
           <div class="col-sm-10">
@@ -144,6 +144,37 @@
         </div>
       </div>
     </div>
+    <div id="errorModal" class="error-modal">
+      <!-- Modal content -->
+      <div
+        class="error-modal-content alert alert-warning alert-dismissible fade show shadow-sm"
+        id="loginAlert"
+      >
+        <p id="errorMessage" style="text-align: center; margin: auto"></p>
+        <button
+          id="closeModal"
+          type="button"
+          class="close"
+          style="font-size: 1.5rem"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+    <script>
+      const btn = document.getElementById("closeModal");
+      btn.onclick = function () {
+        document.getElementById("errorModal").style.display = "none";
+      };
+      const err = document.getElementById("errorModal");
+      err.style.display = "none";
+      const urlParams = new URLSearchParams(window.location.search);
+      const myParam = urlParams.get("error");
+      document.getElementById("errorMessage").innerHTML = myParam;
+      if (myParam != null) err.style.display = "block";
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

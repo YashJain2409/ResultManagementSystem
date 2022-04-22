@@ -81,8 +81,20 @@ const addStudents = async (req, res, next) => {
   } catch (err) {
     return next(new HttpError("creating student failed", 500));
   }
-  if (!classDoc)
-    return next(new HttpError("could not find class for provided id", 404));
+  if (!classDoc) {
+    res.redirect(
+      "/dashboard/students?error=" +
+        encodeURIComponent("could not find class for id")
+    );
+    return;
+  }
+  if (classDoc.students.includes(enrolment_no)) {
+    res.redirect(
+      "/dashboard/students?error=" +
+        encodeURIComponent("enrolment no already exists")
+    );
+    return;
+  }
   try {
     const sess = await mongoose.startSession();
     await sess.startTransaction();
@@ -106,6 +118,13 @@ const addResult = async (req, res, next) => {
   const classDoc = await Class.findById(req.body.class_id);
   const subjects = classDoc.subjects;
   const studentDoc = await Student.findById(req.body.enrolment_no);
+  if (!classDoc.students.includes(req.body.enrolment_no)) {
+    res.redirect(
+      "/dashboard/results?error=" +
+        encodeURIComponent("Could not create, add valid enrolment!")
+    );
+    return;
+  }
   let result = [];
   subjects.forEach((subject) => {
     const marks = req.body[subject];

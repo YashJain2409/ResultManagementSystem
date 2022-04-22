@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  bsCustomFileInput.init()
-})
+  bsCustomFileInput.init();
+});
 
 const handleChange = async (e) => {
   const form = document.getElementById("result-form");
@@ -32,9 +32,14 @@ const handleChange = async (e) => {
 
     inp.setAttribute("placeholder", "enter marks");
     inp.setAttribute("type", "number");
-    inp.setAttribute("required",true);
-    inp.setAttribute("max",70);
-    inp.setAttribute("min",0);
+    inp.setAttribute("required", true);
+    inp.setAttribute("max", 70);
+    inp.setAttribute("min", 0);
+    inp.onkeydown = function (e) {
+      return e.key === "e" || e.key === "." || e.key === "+" || e.key === "-"
+        ? false
+        : true;
+    };
     inpdiv.appendChild(inp);
     mydiv.appendChild(mylab);
     mydiv.appendChild(inpdiv);
@@ -168,7 +173,5 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
-
-
 
 createResultTable();
