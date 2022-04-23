@@ -129,7 +129,26 @@
         <div class="modal-body" id="subjects"></div>
       </div>
     </div>
-
+    <div id="errorModal" class="error-modal">
+      <!-- Modal content -->
+      <div
+        class="error-modal-content alert alert-warning alert-dismissible fade show shadow-sm"
+        id="loginAlert"
+      >
+        <p id="errorMessage" style="text-align: center; margin: auto"></p>
+        <button
+          id="closeModal"
+          type="button"
+          class="close"
+          style="font-size: 1.5rem"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+    <script src="/js/errorMessage.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

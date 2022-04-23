@@ -55,15 +55,6 @@ app.use("/dashboard", dashboardRoutes);
 
 app.use("/excel", excelRoutes);
 
-app.use((error, req, res, next) => {
-  if (res.headerSent) {
-    return next(error);
-  }
-  res
-    .status(error.code || 500)
-    .json({ message: error.message || "an unknown error occured" });
-});
-
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {

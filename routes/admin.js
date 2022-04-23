@@ -14,6 +14,6 @@ Router.post(
       "/admin/login?error=" + encodeURIComponent("Invalid Credentials"),
   })
 );
-Router.post("/", adminControllers.addUser);
+// Router.post("/", adminControllers.addUser);
 
 module.exports = Router;

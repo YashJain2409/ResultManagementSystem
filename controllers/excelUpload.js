@@ -3,7 +3,6 @@ const csv = require("csvtojson");
 const Result = require("../models/result");
 const Student = require("../models/student");
 const Class = require("../models/class");
-const HttpError = require("../models/http-error");
 const mongoose = require("mongoose");
 
 const uploadResult = (req, res, next) => {
@@ -32,7 +31,10 @@ const uploadResult = (req, res, next) => {
           await studentDoc.save();
         });
       } catch (e) {
-        return next(new HttpError("uploading failed", 500));
+        res.redirect(
+          "/dashboard/results?error=" + encodeURIComponent("uploading failed")
+        );
+        return;
       }
     });
   res.redirect("/dashboard/results");
@@ -50,7 +52,10 @@ const uploadStudent = (req, res) => {
           await classDoc.save();
         });
       } catch (e) {
-        return next(new HttpError("uploading failed", 500));
+        res.redirect(
+          "/dashboard/students?error=" + encodeURIComponent("uploading failed")
+        );
+        return;
       }
     });
   res.redirect("/dashboard/students");

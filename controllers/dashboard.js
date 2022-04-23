@@ -1,38 +1,33 @@
 const Class = require("../models/class");
 const Student = require("../models/student");
 const Result = require("../models/result");
-const HttpError = require("../models/http-error");
 const mongoose = require("mongoose");
 
-const dashboard = (req, res, next) => {
+const dashboard = (req, res) => {
   if (req.isAuthenticated()) res.render("dashboard");
   else res.redirect("/admin/login");
 };
 
-const classDashboard = (req, res, next) => {
+const classDashboard = (req, res) => {
   if (req.isAuthenticated()) res.render("class");
   else res.redirect("/admin/login");
 };
 
-const studentDashboard = (req, res, next) => {
+const studentDashboard = (req, res) => {
   if (req.isAuthenticated()) res.render("students");
   else res.redirect("/admin/login");
 };
 
-const resultDashboard = async (req, res, next) => {
+const resultDashboard = async (req, res) => {
   if (req.isAuthenticated()) {
     const classIds = await Class.find({}, "_id");
     res.render("result", { classes: classIds });
   } else res.redirect("/admin/login");
 };
 
-const getClass = async (req, res, next) => {
+const getClass = async (req, res) => {
   let classes;
-  try {
-    classes = await Class.find();
-  } catch (err) {
-    return next(new HttpError("couldn't get classes", 500));
-  }
+  classes = await Class.find();
   res.status(200).json({ classes: classes });
 };
 
@@ -48,7 +43,7 @@ const getResults = async (req, res) => {
   res.status(200).json({ results: results });
 };
 
-const addClass = async (req, res, next) => {
+const addClass = async (req, res) => {
   const { cid, branch, sem, subjects } = req.body;
   const subArray = subjects.split(",");
   const createdClass = new Class({
@@ -61,12 +56,15 @@ const addClass = async (req, res, next) => {
   try {
     await createdClass.save();
   } catch (err) {
-    return next(new HttpError("creating class failed", 500));
+    res.redirect(
+      "/dashboard/classes?error=" + encodeURIComponent("creating class failed")
+    );
+    return;
   }
   res.render("class");
 };
 
-const addStudents = async (req, res, next) => {
+const addStudents = async (req, res) => {
   const { cid, name, enrolment_no } = req.body;
   const createdStudent = new Student({
     _id: enrolment_no,
@@ -79,7 +77,11 @@ const addStudents = async (req, res, next) => {
   try {
     classDoc = await Class.findById(cid);
   } catch (err) {
-    return next(new HttpError("creating student failed", 500));
+    res.redirect(
+      "/dashboard/students?error=" +
+        encodeURIComponent("creating student failed")
+    );
+    return;
   }
   if (!classDoc) {
     res.redirect(
@@ -103,7 +105,11 @@ const addStudents = async (req, res, next) => {
     await classDoc.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
-    return next(new HttpError("creating student failed", 500));
+    res.redirect(
+      "/dashboard/students?error=" +
+        encodeURIComponent("creating student failed")
+    );
+    return;
   }
   res.render("students");
 };
@@ -114,7 +120,7 @@ const subjectByClassid = async (req, res) => {
   res.status(200).json({ subjects: subjects });
 };
 
-const addResult = async (req, res, next) => {
+const addResult = async (req, res) => {
   const classDoc = await Class.findById(req.body.class_id);
   const subjects = classDoc.subjects;
   const studentDoc = await Student.findById(req.body.enrolment_no);
@@ -149,39 +155,74 @@ const addResult = async (req, res, next) => {
     await studentDoc.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
-    return next(new HttpError("creating result failed", 500));
+    res.redirect(
+      "/dashboard/results?error=" + encodeURIComponent("creating result failed")
+    );
+    return;
   }
 
   res.redirect("/dashboard/results");
 };
 
-const deleteClass = async (req, res, next) => {
+const deleteClass = async (req, res) => {
   const id = req.query.cid;
   try {
     await Class.deleteOne({ _id: id });
   } catch (e) {
-    return next(new HttpError("could not delete", 500));
+    res.redirect(
+      "/dashboard/classes?error=" + encodeURIComponent("Delete failed")
+    );
+    return;
   }
   res.status(200).json({ message: "deleted" });
 };
 
-const deleteResult = async (req, res, next) => {
+const deleteResult = async (req, res) => {
   const id = mongoose.Types.ObjectId(req.query.rid);
+  let result;
   try {
-    await Result.deleteOne({ _id: id });
+    result = await Result.findById(id)
+      .populate("student_id")
+      .populate("class_id");
   } catch (err) {
-    return next(new HttpError("could not delete", 500));
+    res.redirect(
+      "/dashboard/results?error=" + encodeURIComponent("Could not delete")
+    );
+    return;
   }
-
+  if (!result) {
+    res.redirect(
+      "/dashboard/results?error=" + encodeURIComponent("could not find result")
+    );
+    return;
+  }
+  try {
+    const sess = await mongoose.startSession();
+    await sess.startTransaction();
+    await result.remove({ session: sess });
+    result.student_id.result.pull(result);
+    await result.student_id.save({ session: sess });
+    result.class_id.result.pull(result);
+    await result.class_id.save({ session: sess });
+    sess.commitTransaction();
+  } catch (err) {
+    res.redirect(
+      "/dashborad/results?error=" + encodeURIComponent("Could not delete")
+    );
+    return;
+  }
   res.json({ message: "deleted" });
 };
 
-const deleteStudents = async (req, res, next) => {
+const deleteStudents = async (req, res) => {
   const id = req.query.sid;
   try {
     await Student.deleteOne({ _id: id });
   } catch (e) {
-    return next(new HttpError("could not delete", 500));
+    res.redirect(
+      "/dashboard/students?error=" + encodeURIComponent("delete failed")
+    );
+    return;
   }
   res.status(200).json({ message: "deleted" });
 };
