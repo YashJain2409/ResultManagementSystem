@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,6 +14,22 @@
     />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/navbar.css" />
+    <style>
+
+
+       #i{
+         display: none;
+
+       }
+
+
+      @media print{
+
+        #i{
+          display: block;
+        }
+      }
+    </style>
 
     <title>Result</title>
   </head>
@@ -32,6 +49,19 @@
       </nav>
     </header>
     <br />
+
+    
+          
+    <br>
+    <br>
+    <br>
+    <div  id="i">
+
+        
+        <img src="../public/assets/SCET-LOGO (3).png" class="img-fluid" alt="...">
+        
+    </div>
+     
     <section style="margin-top: 100px">
       <div class="container">
         <p class="text-sm-start">Name : <%= studentName %></p>
