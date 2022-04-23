@@ -88,11 +88,9 @@ async function createResultTable() {
     th.innerHTML = i;
     th.setAttribute("scope", "row");
     const td = document.createElement("td");
-    td.innerHTML = item.student_id._id;
+    td.innerHTML = item.student_id;
     const td1 = document.createElement("td");
-    td1.innerHTML = item.student_id.class_id;
-    const td2 = document.createElement("td");
-    td2.innerHTML = item.student_id.name;
+    td1.innerHTML = item.class_id;
     const td3 = document.createElement("td");
     td3.appendChild(btn);
     const td4 = document.createElement("td");
@@ -111,7 +109,7 @@ async function createResultTable() {
     iconDiv.append(span);
     iconDiv.setAttribute("style", "margin-top: 0;");
     td4.append(iconDiv);
-    row.append(inp, th, td, td1, td2, td3, td4);
+    row.append(inp, th, td, td1, td3, td4);
     tbody.appendChild(row);
     const delBtn = document.getElementById("btn-" + i.toString());
     delBtn.addEventListener("click", async (e) => {
@@ -140,7 +138,7 @@ async function createResultTable() {
       const p = document.getElementById("sem");
       p.classList.add("lead");
       p.setAttribute("style", "margin-top : 3px;");
-      p.innerHTML = "Sem : " + item.class_id.sem;
+      p.innerHTML = "Sem : " + item.class_id[item.class_id.length-1];
       const modalBody = document.getElementById("result");
       while (modalBody.firstChild) {
         modalBody.removeChild(modalBody.lastChild);

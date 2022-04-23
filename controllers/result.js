@@ -9,21 +9,20 @@ const resultPage = async (req, res) => {
     res.redirect("/?error=" + encodeURIComponent("Oops! No data found"));
     return;
   }
-  const result = await Result.findOne({
-    student_id: enrolment_no,
-    class_id: doc.class_id._id,
-  });
-  if (result == null) {
-    res.redirect("/?error=" + encodeURIComponent("Oops! No data found"));
-    return;
-  }
+  // const result = await Result.findOne({
+  //   student_id: enrolment_no,
+  //   class_id: doc.class_id._id,
+  // });
+  // if (result == null) {
+  //   res.redirect("/?error=" + encodeURIComponent("Oops! No data found"));
+  //   return;
+  // }
 
   res.render("studentResult", {
     enrolment_no: enrolment_no,
     studentName: doc.name,
     studentBranch: doc.class_id.branch,
     studentSem: doc.class_id.sem,
-    studentResult: result.result,
   });
 };
 
@@ -33,10 +32,15 @@ const getResult = async (req, res) => {
     { sem: sem, branch: req.query.branch },
     "_id"
   );
+
   const result = await Result.findOne({
     student_id: req.query.enrolment_no,
     class_id: class_id,
   });
+  if(result == null){
+      res.json({result: null});
+      return;
+  }
   res.json({ result: result.result });
 };
 exports.resultPage = resultPage;

@@ -37,9 +37,7 @@ const getStudents = async (req, res) => {
 };
 
 const getResults = async (req, res) => {
-  const results = await Result.find()
-    .populate("class_id")
-    .populate("student_id");
+  const results = await Result.find();
   res.status(200).json({ results: results });
 };
 
@@ -124,6 +122,17 @@ const addResult = async (req, res) => {
   const classDoc = await Class.findById(req.body.class_id);
   const subjects = classDoc.subjects;
   const studentDoc = await Student.findById(req.body.enrolment_no);
+
+  const duplicate = await Result.find({
+    student_id: req.body.enrolment_no,
+    class_id: req.body.class_id,
+  });
+  if (duplicate != null) {
+    res.redirect(
+      "/dashboard/results?error=" + encodeURIComponent("Result already exists")
+    );
+    return;
+  }
   if (!classDoc.students.includes(req.body.enrolment_no)) {
     res.redirect(
       "/dashboard/results?error=" +
