@@ -179,15 +179,38 @@ const deleteClass = async (req, res) => {
 
 const deleteResult = async (req, res) => {
   const id = mongoose.Types.ObjectId(req.query.rid);
+  let result;
   try {
-    await Result.deleteOne({ _id: id });
+    result = await Result.findById(id)
+      .populate("student_id")
+      .populate("class_id");
   } catch (err) {
     res.redirect(
-      "/dashboard/results?error=" + encodeURIComponent("delete failed")
+      "/dashboard/results?error=" + encodeURIComponent("Could not delete")
     );
     return;
   }
-
+  if (!result) {
+    res.redirect(
+      "/dashboard/results?error=" + encodeURIComponent("could not find result")
+    );
+    return;
+  }
+  try {
+    const sess = await mongoose.startSession();
+    await sess.startTransaction();
+    await result.remove({ session: sess });
+    result.student_id.result.pull(result);
+    await result.student_id.save({ session: sess });
+    result.class_id.result.pull(result);
+    await result.class_id.save({ session: sess });
+    sess.commitTransaction();
+  } catch (err) {
+    res.redirect(
+      "/dashborad/results?error=" + encodeURIComponent("Could not delete")
+    );
+    return;
+  }
   res.json({ message: "deleted" });
 };
 
