@@ -27,7 +27,7 @@
           </button>
         </form>
         <div class="alert alert-warning alert-dismissible fade show" style="margin-top: 20px;"  id="loginAlert">
-          <p style="text-align: center; margin: auto;">Invalid Credentials</p>
+          <p id="errorMessage" style="text-align: center; margin: auto;"></p>
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -39,7 +39,8 @@
        err.style.display = "none";
        const urlParams = new URLSearchParams(window.location.search);
        const myParam = urlParams.get('error');
-       if(myParam == "Invalid Credentials") 
+       document.getElementById("errorMessage").innerHTML = myParam;
+       if(myParam != null) 
         err.style.display = "block";
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

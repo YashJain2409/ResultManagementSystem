@@ -162,9 +162,7 @@
         class="error-modal-content alert alert-warning alert-dismissible fade show shadow-sm"
         id="loginAlert"
       >
-        <p id="errorMessage" style="text-align: center; margin: auto">
-          Could not create, add valid values!
-        </p>
+        <p id="errorMessage" style="text-align: center; margin: auto"></p>
         <button
           id="closeModal"
           type="button"
@@ -177,19 +175,7 @@
         </button>
       </div>
     </div>
-    <script>
-      const btn = document.getElementById("closeModal");
-      btn.onclick = function () {
-        document.getElementById("errorModal").style.display = "none";
-      };
-      const err = document.getElementById("errorModal");
-      err.style.display = "none";
-      const urlParams = new URLSearchParams(window.location.search);
-      const myParam = urlParams.get("error");
-      document.getElementById("errorMessage").innerHTML = myParam;
-      if(myParam != null)
-      err.style.display = "block";
-    </script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -215,6 +201,7 @@
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.semanticui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.8/semantic.min.js"></script>
     <script src="/js/resultDashboard.js"></script>
+    <script src="/js/errorMessage.js"></script>
     <script
       src="https://kit.fontawesome.com/05332581fb.js"
       crossorigin="anonymous"

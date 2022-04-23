@@ -163,18 +163,7 @@
         </button>
       </div>
     </div>
-    <script>
-      const btn = document.getElementById("closeModal");
-      btn.onclick = function () {
-        document.getElementById("errorModal").style.display = "none";
-      };
-      const err = document.getElementById("errorModal");
-      err.style.display = "none";
-      const urlParams = new URLSearchParams(window.location.search);
-      const myParam = urlParams.get("error");
-      document.getElementById("errorMessage").innerHTML = myParam;
-      if (myParam != null) err.style.display = "block";
-    </script>
+    <script src="/js/errorMessage.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

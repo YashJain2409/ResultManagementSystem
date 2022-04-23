@@ -1,21 +1,20 @@
 const Student = require("../models/student");
 const Result = require("../models/result");
 const Class = require("../models/class");
-const Http = require("../models/http-error");
 
 const resultPage = async (req, res) => {
   const enrolment_no = req.body.enrolment_no;
   const doc = await Student.findOne({ _id: enrolment_no }).populate("class_id");
   if (doc == null) {
-    res.redirect("/?error=" + encodeURIComponent("Oops! No data available"));
+    res.redirect("/?error=" + encodeURIComponent("Oops! No data found"));
     return;
   }
   const result = await Result.findOne({
     student_id: enrolment_no,
     class_id: doc.class_id._id,
   });
-  if (result == null){
-    res.redirect("/?error=" + encodeURIComponent("Oops! No data available"));
+  if (result == null) {
+    res.redirect("/?error=" + encodeURIComponent("Oops! No data found"));
     return;
   }
 
