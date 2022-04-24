@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  bsCustomFileInput.init()
-})
+  bsCustomFileInput.init();
+});
 
 var fileModal = document.getElementById("fileModal");
 
@@ -67,12 +67,19 @@ async function createStudentTable() {
 
 createStudentTable();
 
-const fileBtn = document.getElementById("fileBtn");
+const uploadBtn = document.getElementById("uploadBtn");
+const updateBtn = document.getElementById("updateBtn");
+const form = document.getElementById("upload-form");
 
-fileBtn.addEventListener("click", (e) => {
+uploadBtn.addEventListener("click", (e) => {
+  form.setAttribute("action", "/excel/uploadStudent");
   fileModal.style.display = "block";
 });
 
+updateBtn.addEventListener("click", (e) => {
+  form.setAttribute("action", "/excel/updateClass");
+  fileModal.style.display = "block";
+});
 
 fileSpan.onclick = function (e) {
   fileModal.style.display = "none";

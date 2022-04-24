@@ -9,14 +9,6 @@ const resultPage = async (req, res) => {
     res.redirect("/?error=" + encodeURIComponent("Oops! No data found"));
     return;
   }
-  // const result = await Result.findOne({
-  //   student_id: enrolment_no,
-  //   class_id: doc.class_id._id,
-  // });
-  // if (result == null) {
-  //   res.redirect("/?error=" + encodeURIComponent("Oops! No data found"));
-  //   return;
-  // }
 
   res.render("studentResult", {
     enrolment_no: enrolment_no,

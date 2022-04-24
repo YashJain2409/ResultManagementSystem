@@ -86,8 +86,11 @@
       </form>
     </div>
     <div class="form-style">
-      <button class="btn btn-dark" style="width: 125px" id="fileBtn">
+      <button class="btn btn-dark" style="width: 125px" id="uploadBtn">
         Upload File
+      </button>
+      <button class="btn btn-dark" style="width: 150px; margin-left: 5px;" id="updateBtn">
+        Update Class info
       </button>
     </div>
     <div class="container" style="margin-top: 70px">
@@ -113,7 +116,7 @@
         </div>
         <div class="modal-body">
           <form
-            action="/excel/uploadStudent"
+            id="upload-form"
             enctype="multipart/form-data"
             method="post"
           >

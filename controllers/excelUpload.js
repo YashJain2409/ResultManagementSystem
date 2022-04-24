@@ -4,8 +4,9 @@ const Result = require("../models/result");
 const Student = require("../models/student");
 const Class = require("../models/class");
 const mongoose = require("mongoose");
+const { json } = require("express/lib/response");
 
-const uploadResult = (req, res, next) => {
+const uploadResult = (req, res) => {
   csv()
     .fromFile(req.file.path)
     .then(async (jsonobj) => {
@@ -36,8 +37,8 @@ const uploadResult = (req, res, next) => {
         );
         return;
       }
+      res.redirect("/dashboard/results");
     });
-  res.redirect("/dashboard/results");
 };
 
 const uploadStudent = (req, res) => {
@@ -57,9 +58,35 @@ const uploadStudent = (req, res) => {
         );
         return;
       }
+      res.redirect("/dashboard/students");
     });
-  res.redirect("/dashboard/students");
+};
+
+const updateClass = (req, res) => {
+  csv()
+    .fromFile(req.file.path)
+    .then(async (jsonobj) => {
+      for await (const ele of jsonobj) {
+        const student = await Student.findById(ele.enrolment_no);
+        const classdoc = await Class.findById(student.class_id);
+        const newClassdoc = await Class.findById(ele.class_id);
+        student.class_id = ele.class_id;
+        await student.save();
+
+        await Class.findOneAndUpdate(
+          { _id: classdoc._id },
+          { $pull: { students: student._id } }
+        );
+
+        await Class.findOneAndUpdate(
+          { _id: newClassdoc._id },
+          { $push: { students: student._id } }
+        );
+      }
+      res.redirect("/dashboard/students");
+    });
 };
 
 exports.uploadResult = uploadResult;
 exports.uploadStudent = uploadStudent;
+exports.updateClass = updateClass;

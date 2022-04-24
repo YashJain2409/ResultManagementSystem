@@ -2,6 +2,8 @@ const Class = require("../models/class");
 const Student = require("../models/student");
 const Result = require("../models/result");
 const mongoose = require("mongoose");
+const result = require("../models/result");
+const { ensureNotLoggedIn } = require("connect-ensure-login/lib");
 
 const dashboard = (req, res) => {
   if (req.isAuthenticated()) res.render("dashboard");
@@ -123,7 +125,7 @@ const addResult = async (req, res) => {
   const subjects = classDoc.subjects;
   const studentDoc = await Student.findById(req.body.enrolment_no);
 
-  const duplicate = await Result.find({
+  const duplicate = await Result.findOne({
     student_id: req.body.enrolment_no,
     class_id: req.body.class_id,
   });
@@ -225,8 +227,24 @@ const deleteResult = async (req, res) => {
 
 const deleteStudents = async (req, res) => {
   const id = req.query.sid;
+  let student;
+
   try {
-    await Student.deleteOne({ _id: id });
+    student = await Student.findById(id).populate("class_id");
+  } catch (err) {
+    res.redirect(
+      "/dashborad/students?error=" + encodeURIComponent("Could not delete")
+    );
+    return;
+  }
+  try {
+    await Result.deleteMany({ student_id: id });
+    const sess = await mongoose.startSession();
+    await sess.startTransaction();
+    await student.remove({ session: sess });
+    student.class_id.students.pull(student);
+    await student.class_id.save({ session: sess });
+    sess.commitTransaction();
   } catch (e) {
     res.redirect(
       "/dashboard/students?error=" + encodeURIComponent("delete failed")
