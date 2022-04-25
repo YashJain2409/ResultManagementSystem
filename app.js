@@ -58,7 +58,7 @@ app.use("/excel", excelRoutes);
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
-    app.listen(port);
+    app.listen(process.env.PORT || 3000);
   })
   .catch((err) => {
     console.log(err);
