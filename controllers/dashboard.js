@@ -2,8 +2,6 @@ const Class = require("../models/class");
 const Student = require("../models/student");
 const Result = require("../models/result");
 const mongoose = require("mongoose");
-const result = require("../models/result");
-const { ensureNotLoggedIn } = require("connect-ensure-login/lib");
 
 const dashboard = (req, res) => {
   if (req.isAuthenticated()) res.render("dashboard");

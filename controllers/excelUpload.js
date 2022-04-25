@@ -4,7 +4,6 @@ const Result = require("../models/result");
 const Student = require("../models/student");
 const Class = require("../models/class");
 const mongoose = require("mongoose");
-const { json } = require("express/lib/response");
 
 const uploadResult = (req, res) => {
   csv()
