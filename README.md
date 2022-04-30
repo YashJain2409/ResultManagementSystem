@@ -38,10 +38,10 @@ Start the server
 
 ## ScreenShots
 
-<img src = "public/Readme/result1.PNG" />
-<img src = "public/Readme/result2.PNG" />
-<img src = "public/Readme/result3.PNG" />
-<img src = "public/Readme/result4.PNG" />
-<img src = "public/Readme/result5.PNG" />
-<img src = "public/Readme/result6.PNG" />
-<img src = "public/Readme/result7.PNG" />
+<img src = "public/README/result1.PNG" />
+<img src = "public/README/result2.PNG" />
+<img src = "public/README/result3.PNG" />
+<img src = "public/README/result4.PNG" />
+<img src = "public/README/result5.PNG" />
+<img src = "public/README/result6.PNG" />
+<img src = "public/README/result7.PNG" />
