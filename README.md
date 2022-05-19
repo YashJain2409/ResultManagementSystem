@@ -36,6 +36,13 @@ Start the server
    node app.js
 ```
 
+Credentials for admin
+
+```bash
+   username : admin
+   password : admin
+```
+
 ## ScreenShots
 
 <img src = "public/README/result1.PNG" />
